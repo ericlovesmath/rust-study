@@ -1,4 +1,14 @@
-use std::io;
+mod rect;
+mod enumTest;
+
+use std::{convert, io};
+
+struct User {
+    username: String,
+    email: String,
+    sign_in_count: u64,
+    active: bool,
+}
 
 fn main() {
     let mut x = 5;
@@ -117,6 +127,90 @@ fn main() {
     let s2 = String::from("hello");     // s2 comes into scope
     let s3 = takes_and_gives_back(s2); // Takes ownership, gives it back, moving s2 out
 
+    // Reference and Borrowing
+    
+    let mut s1 = String::from("hello");
+    let len = calculate_length(&s1); // Does not take ownership
+    println!("The length of '{}' is {}.", s1, len);
+
+    change(&mut s1); // mutable reference
+
+    // Slices also do not require ownership
+
+    let s = String::from("hello world");
+
+    let hello = &s[..5];
+    let world = &s[6..11];
+    let first_word_s = first_word(&s);
+
+    // Structs
+    
+    // Instantiate
+    let mut user1 = User {
+        email: String::from("someone@example.com"),
+        username: String::from("someusername123"),
+        active: true,
+        sign_in_count: 1,
+    };
+
+    user1.email = String::from("anotheremail@example.com");
+
+    // Struct
+
+    let rect1 = rect::Rectangle {
+        width: 30,
+        height: 50,
+    };
+    let rect2 = rect::Rectangle {
+        width: 20,
+        height: 40,
+    };
+
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        rect::area(&rect1)
+    );
+
+    println!("rect1 is {:#?}", rect1);
+    println!("rect1 is {}", rect1.perimeter());
+    println!("rect1 is {}", rect1.can_hold(&rect2));
+
+    let square1 = rect::Rectangle::square(10);
+    
+    println!("rect1 is {:#?}", square1);
+
+    enumTest::test();
+
+}
+
+fn build_user(email: String, username: String) -> User {
+    User {
+        email: email,
+        username: username,
+        active: true,
+        sign_in_count: 1,
+    }
+}
+
+fn first_word(s: &String) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+
+    &s[..]
+}
+
+fn change(some_string: &mut String) {
+    some_string.push_str(", world");
+}
+
+// You can't modify something you borrow
+fn calculate_length(s: &String) -> usize {
+    s.len()
 }
 
 fn another_function(x: i32) {
