@@ -1,5 +1,5 @@
-mod rect;
 mod enumTest;
+mod rect;
 
 use std::{convert, io};
 
@@ -22,7 +22,7 @@ fn main() {
     let x = x * 2;
 
     // Datatypes
-    
+
     let guess: u32 = "42".parse().expect("Not a number!");
     let x = 2.0; // f64
     let y: f32 = 3.0; // f32
@@ -39,7 +39,7 @@ fn main() {
     let spaces = spaces.len();
 
     // std io
-    
+
     let mut input = String::new();
 
     io::stdin()
@@ -62,7 +62,7 @@ fn main() {
     };
 
     // Control Flow
-    
+
     let number = 6;
 
     if number % 4 == 0 {
@@ -111,7 +111,7 @@ fn main() {
     println!("{}", s); // This will print `hello, world!`
 
     // s is not longer valid here as it is out of the scope
-    
+
     let s1 = String::from("hello");
     // let s2 = s1;
     // Doing the above would copy the pointer, and cause issues with s1 dropping out of scope early
@@ -124,11 +124,11 @@ fn main() {
 
     // Ownership is taken in functions too, not just copied
     // * if is a pointer to a heap
-    let s2 = String::from("hello");     // s2 comes into scope
+    let s2 = String::from("hello"); // s2 comes into scope
     let s3 = takes_and_gives_back(s2); // Takes ownership, gives it back, moving s2 out
 
     // Reference and Borrowing
-    
+
     let mut s1 = String::from("hello");
     let len = calculate_length(&s1); // Does not take ownership
     println!("The length of '{}' is {}.", s1, len);
@@ -144,7 +144,7 @@ fn main() {
     let first_word_s = first_word(&s);
 
     // Structs
-    
+
     // Instantiate
     let mut user1 = User {
         email: String::from("someone@example.com"),
@@ -176,11 +176,10 @@ fn main() {
     println!("rect1 is {}", rect1.can_hold(&rect2));
 
     let square1 = rect::Rectangle::square(10);
-    
+
     println!("rect1 is {:#?}", square1);
 
     enumTest::test();
-
 }
 
 fn build_user(email: String, username: String) -> User {
@@ -221,6 +220,7 @@ fn five() -> i32 {
     5 // Missing semicolon acts as return
 }
 
-fn takes_and_gives_back(a_string: String) -> String { // a_string comes into
-    a_string  // a_string is returned and moves out to the calling function
+fn takes_and_gives_back(a_string: String) -> String {
+    // a_string comes into
+    a_string // a_string is returned and moves out to the calling function
 }
