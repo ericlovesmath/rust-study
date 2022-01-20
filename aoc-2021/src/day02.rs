@@ -6,7 +6,6 @@ pub fn run() {
 }
 
 pub fn day2a(file_name: &str) -> String {
-
     let data = parse_file(file_name);
 
     let mut distance: u32 = 0;
@@ -25,7 +24,6 @@ pub fn day2a(file_name: &str) -> String {
 }
 
 pub fn day2b(file_name: &str) -> String {
-
     let data = parse_file(file_name);
 
     let mut distance: u32 = 0;
@@ -61,7 +59,12 @@ fn parse_file(file_name: &str) -> Vec<(String, u32)> {
 #[cfg(test)]
 mod tests {
     #[test]
-    fn part_1a() {
-        assert_eq!(super::day2a("assets/02_t1.txt"), "150");
+    fn part_2a() {
+        assert_eq!(super::day2a("assets/02_test.txt"), "150");
+    }
+
+    #[test]
+    fn part_2b() {
+        assert_eq!(super::day2b("assets/02_test.txt"), "900");
     }
 }

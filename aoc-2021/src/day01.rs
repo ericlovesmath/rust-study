@@ -32,10 +32,10 @@ fn parse_file(file_name: &str) -> Vec<u32> {
 mod tests {
     #[test]
     fn part_1a() {
-        assert_eq!(super::day1a("assets/01_t1.txt"), "7");
+        assert_eq!(super::day1a("assets/01_test.txt"), "7");
     }
     #[test]
     fn part_1b() {
-        assert_eq!(super::day1b("assets/01_t1.txt"), "5");
+        assert_eq!(super::day1b("assets/01_test.txt"), "5");
     }
 }

@@ -1,5 +1,6 @@
 mod day01;
 mod day02;
+mod day03;
 mod utils;
 
 fn main() {
@@ -9,6 +10,7 @@ fn main() {
     match problem {
         "day01" => day01::run(),
         "day02" => day02::run(),
+        "day03" => day03::run(),
         _ => println!("Haven't gotten to that yet!"),
     };
 }
