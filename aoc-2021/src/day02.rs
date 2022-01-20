@@ -7,7 +7,7 @@ pub fn run() {
 
 pub fn day2a(file_name: &str) -> String {
 
-    let data = read_file(file_name);
+    let data = parse_file(file_name);
 
     let mut distance: u32 = 0;
     let mut depth: u32 = 0;
@@ -26,7 +26,7 @@ pub fn day2a(file_name: &str) -> String {
 
 pub fn day2b(file_name: &str) -> String {
 
-    let data = read_file(file_name);
+    let data = parse_file(file_name);
 
     let mut distance: u32 = 0;
     let mut depth: u32 = 0;
@@ -47,7 +47,7 @@ pub fn day2b(file_name: &str) -> String {
     (distance * depth).to_string()
 }
 
-fn read_file(file_name: &str) -> Vec<(String, u32)> {
+fn parse_file(file_name: &str) -> Vec<(String, u32)> {
     fs::read_to_string(file_name)
         .expect("Could not load file")
         .lines()

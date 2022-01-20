@@ -6,11 +6,7 @@ pub fn run() {
 }
 
 pub fn day1a(file_name: &str) -> String {
-    fs::read_to_string(file_name)
-        .expect("Could not load file")
-        .lines()
-        .map(|l| l.parse::<u32>().expect("Data failed to parse to u32"))
-        .collect::<Vec<u32>>()
+    parse_file(file_name)
         .windows(2)
         .filter(|w| w[0] < w[1])
         .count()
@@ -18,17 +14,20 @@ pub fn day1a(file_name: &str) -> String {
 }
 
 pub fn day1b(file_name: &str) -> String {
-    fs::read_to_string(file_name)
-        .expect("Could not load file")
-        .lines()
-        .map(|l| l.parse::<u32>().expect("Data failed to parse to u32"))
-        .collect::<Vec<u32>>()
+    parse_file(file_name)
         .windows(4)
         .filter(|w| w[0] < w[3])
         .count()
         .to_string()
 }
 
+fn parse_file(file_name: &str) -> Vec<u32> {
+    fs::read_to_string(file_name)
+        .expect("Could not load file")
+        .lines()
+        .map(|l| l.parse::<u32>().expect("Data failed to parse to u32"))
+        .collect::<Vec<u32>>()
+}
 #[cfg(test)]
 mod tests {
     #[test]
