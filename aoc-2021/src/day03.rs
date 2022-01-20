@@ -6,17 +6,15 @@ pub fn run() {
 }
 
 pub fn day3a(file_name: &str) -> String {
-    let data: Vec<String> = parse_file(file_name);
+    let data: Vec<Vec<usize>> = parse_file(file_name);
 
     let int_length: usize = data[0].len();
     let threshold: usize = data.len() / 2;
     let mut bit_count: Vec<usize> = vec![0; int_length];
 
-    for num in data {
-        for (i, c) in num.chars().enumerate() {
-            if c == '1' {
-                bit_count[i] += 1
-            }
+    for num in &data {
+        for (i, c) in num.iter().enumerate() {
+            bit_count[i] += c
         }
     }
 
@@ -33,9 +31,6 @@ pub fn day3a(file_name: &str) -> String {
         }
     }
 
-    // println!("{:?}", bit_count);
-    // println!("{}, {}", gamma, epsilon);
-
     (gamma * epsilon).to_string()
 }
 
@@ -44,13 +39,16 @@ pub fn day3b(file_name: &str) -> String {
     "tmp".to_string()
 }
 
-fn parse_file(file_name: &str) -> Vec<String> {
+fn parse_file(file_name: &str) -> Vec<Vec<usize>> {
     fs::read_to_string(file_name)
         .expect("Could not load file")
         .lines()
-        // .map(|l| l.parse::<u33>().expect("Data failed to parse to u32"))
-        .map(|l| l.to_string())
-        .collect::<Vec<String>>()
+        .map(|l| {
+            l.chars()
+                .map(|n| if n == '1' { 1 } else { 0 })
+                .collect::<Vec<usize>>()
+        })
+        .collect::<Vec<Vec<usize>>>()
 }
 #[cfg(test)]
 mod tests {
@@ -58,8 +56,8 @@ mod tests {
     fn part_3a() {
         assert_eq!(super::day3a("assets/03_test.txt"), "198");
     }
-    // #[test]
-    // fn part_3b() {
-    // assert_eq!(super::day3b("assets/03_test.txt"), "5");
-    // }
+    #[test]
+    fn part_3b() {
+        assert_eq!(super::day3b("assets/03_test.txt"), "230");
+    }
 }
