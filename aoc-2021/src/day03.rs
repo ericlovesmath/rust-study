@@ -35,8 +35,57 @@ pub fn day3a(file_name: &str) -> String {
 }
 
 pub fn day3b(file_name: &str) -> String {
-    parse_file(file_name);
-    "tmp".to_string()
+    let data: Vec<Vec<usize>> = parse_file(file_name);
+    let oxygen_gen_rating: usize = get_oxygen_generator_rating(&data);
+    let c02_scrubber_rating: usize = get_c02_scrubber_rating(&data);
+
+    (oxygen_gen_rating * c02_scrubber_rating).to_string()
+}
+
+enum RatingMode {
+    OxygenGenerator,
+    C02Scrubber,
+}
+
+fn get_oxygen_generator_rating(data: &Vec<Vec<usize>>) -> usize {
+    get_rating(&data, RatingMode::OxygenGenerator)
+}
+
+fn get_c02_scrubber_rating(data: &Vec<Vec<usize>>) -> usize {
+    get_rating(&data, RatingMode::C02Scrubber)
+}
+
+fn get_rating(original_data: &Vec<Vec<usize>>, mode: RatingMode) -> usize {
+    let mut data = original_data.clone();
+    let mut one_count: usize;
+    let mut retain_num: usize;
+
+    for i in 0..data[0].len() {
+        one_count = data.iter().map(|n| n[i]).sum();
+
+        retain_num = match mode {
+            RatingMode::OxygenGenerator => one_count > (data.len() - 1) / 2,
+            RatingMode::C02Scrubber => one_count < (data.len() + 1) / 2,
+        } as usize;
+
+        data.retain(|n| n[i] == retain_num);
+
+        if data.len() == 1 {
+            break;
+        };
+    }
+
+    assert!(data.len() == 1);
+    bit_array_to_int(&data[0])
+}
+
+fn bit_array_to_int(arr: &Vec<usize>) -> usize {
+    let mut ans: usize = 0;
+    for i in 0..arr.len() {
+        ans <<= 1;
+        ans += arr[i];
+    }
+    ans
 }
 
 fn parse_file(file_name: &str) -> Vec<Vec<usize>> {
