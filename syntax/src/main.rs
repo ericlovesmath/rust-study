@@ -1,5 +1,6 @@
 mod enumTest;
 mod rect;
+mod threading;
 
 use std::{convert, io};
 

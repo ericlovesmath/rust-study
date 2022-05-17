@@ -41,7 +41,6 @@ pub fn notify<T: Summary>(item: &T) {
 }
 
 pub fn lifetimes() {
-
     let string1 = String::from("abcd");
     let string2 = String::from("xyz");
 
@@ -56,5 +55,44 @@ pub fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
         x
     } else {
         y
+    }
+}
+
+pub fn closures() {
+    let expensive_closure = |num: u32| -> u32 {
+        println!("calculating slowly...");
+        num
+    };
+    let n = expensive_closure(10);
+}
+
+struct Cacher<T>
+where
+    T: Fn(u32) -> u32,
+{
+    calculation: T,
+    value: Option<u32>,
+}
+
+impl<T> Cacher<T>
+where
+    T: Fn(u32) -> u32,
+{
+    fn new(calculation: T) -> Cacher<T> {
+        Cacher {
+            calculation,
+            value: None,
+        }
+    }
+
+    fn value(&mut self, arg: u32) -> u32 {
+        match self.value {
+            Some(v) => v,
+            None => {
+                let v = (self.calculation)(arg);
+                self.value = Some(v);
+                v
+            }
+        }
     }
 }
