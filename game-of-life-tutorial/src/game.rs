@@ -1,4 +1,4 @@
-use std::fmt;
+// use std::fmt;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub enum Cell {
@@ -70,9 +70,30 @@ impl Universe {
         }
         count
     }
+
+    pub fn row_as_string(&self, row: u32) -> Option<String> {
+        if row < self.height {
+            let mut row_string = String::new();
+            let start = self.get_index(row, 0);
+            let end = self.get_index(row, self.width);
+            for &cell in &self.cells[start..end] {
+                let symbol = match cell {
+                    Cell::Alive => '◼',
+                    Cell::Dead => '◻',
+                };
+                row_string.push(symbol);
+            }
+            Some(row_string)
+        } else {
+            None
+        }
+
+    }
 }
 
-impl fmt::Display for Universe {
+
+// Fails after using Raw Mode
+/* impl fmt::Display for Universe {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         for line in self.cells.as_slice().chunks(self.width as usize) {
             for &cell in line {
@@ -86,4 +107,4 @@ impl fmt::Display for Universe {
         }
         Ok(())
     }
-}
+} */
