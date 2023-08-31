@@ -28,6 +28,7 @@ fn parse_file(file_name: &str) -> Vec<u32> {
         .map(|l| l.parse::<u32>().expect("Data failed to parse to u32"))
         .collect::<Vec<u32>>()
 }
+
 #[cfg(test)]
 mod tests {
     #[test]
